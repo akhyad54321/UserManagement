@@ -1,0 +1,7 @@
+FROM prod-icp-cluster.etabadul.com:8500/appdynamicselastic/app-agent:1
+MAINTAINER TABADUL
+COPY target/UserManagement.jar /opt/spring-cloud/lib/
+
+ENTRYPOINT [ "sh", "-c", "java -Dappdynamics.agent.uniqueHostId=$(sed -rn '1s#.*/##; 1s/(.{12}).*/\\1/p' /proc/self/cgroup) $JAVA_OPTS -Xmx1024m -jar /opt/spring-cloud/lib/UserManagement.jar"]
+
+EXPOSE 8188
